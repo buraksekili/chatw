@@ -19,7 +19,8 @@ go run server/main.go -p 3000
 
 ## Setup client 
 
-A client dials a server specified through command-line argument.
+The client dials a server specified through command-line argument.
+By default, the client dials `:8080`
 
 For example, to dial server running on `localhost:8080`;
 ```shell script
