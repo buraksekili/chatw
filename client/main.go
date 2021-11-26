@@ -21,16 +21,19 @@ func (o *outWriter) Write(p []byte) (n int, err error) {
 }
 
 func main() {
+	addr := ":8080"
 	args := os.Args[1:]
-	if len(args) == 0 {
-		log.Fatal("invalid arguments. specify address of the server")
+	if len(args) != 0 {
+		log.Printf("%s will be used as the server address.", args[0])
+		addr = args[0]
 	}
-	if err := Connect(args[0]); err != nil {
-		log.Fatalf("cannot connect to %s; %v", args[0], err)
+	if err := Connect(addr); err != nil {
+		log.Fatalf("cannot connect to %s; %v", addr, err)
 	}
 }
 
 func Connect(addr string) error {
+	log.Println("connecting to ", addr)
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
 		return err

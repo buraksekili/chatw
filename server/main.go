@@ -36,16 +36,20 @@ func listen(port string) error {
 
 	log.Printf("listening on: %s\n", listener.Addr().String())
 	for {
+		// Accept new users to connect.
 		conn, err := listener.Accept()
 		if err != nil {
-			log.Println(err.Error())
+			log.Printf("failed to accept listener, err: %v", err.Error())
 			continue
 		}
 
 		log.Printf("%s connected\n", conn.RemoteAddr().String())
 		users[conn] = true
 
+		// Send new connection to this goroutine.
 		go func(conn net.Conn) {
+			// Scan connection for possible inputs.
+			// When user sends sth, you can detect them here.
 			scanner := bufio.NewScanner(conn)
 			defer conn.Close()
 			for scanner.Scan() {
